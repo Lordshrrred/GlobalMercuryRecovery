@@ -139,15 +139,15 @@ export const team: TeamMember[] = [
     ],
   },
   {
-    name: 'Matt Dunn',
+    name: 'Matt EarthStar',
     title: 'Chief Technology Officer',
-    slug: 'matt-dunn',
-    headshot: '/team/matt-dunn.jpg',
+    slug: 'matt-earthstar',
+    headshot: '/team/matt-earthstar.jpg',
     headshotFit: { scale: 1.3, transformOrigin: '50% 0%' },
     shortBio:
       'A twenty-year builder of digital infrastructure and an early adopter of agentic AI, Matt architects the systems that make the GMRWS platform legible, scalable, and investor-ready, combining deep technical fluency with a track record of leading people and closing business in high-stakes environments.',
     bio: [
-      'Matt Dunn brings two decades of hands-on digital architecture, AI systems development, and entrepreneurial execution to the GMRWS leadership team. As an early adopter of Claude Code, ChatGPT, and agentic AI frameworks, he builds full-stack digital platforms from concept to live deployment across content, e-commerce, and multi-platform syndication systems.',
+      'Matt EarthStar brings two decades of hands-on digital architecture, AI systems development, and entrepreneurial execution to the GMRWS leadership team. As an early adopter of Claude Code, ChatGPT, and agentic AI frameworks, he builds full-stack digital platforms from concept to live deployment across content, e-commerce, and multi-platform syndication systems.',
       'At Apple, Matt progressed through three roles (Training Lead, Sales Leader, and Technical Expert), ranking in the top 3 performers every quarter on revenue and upsell metrics while driving a 7% improvement in customer satisfaction scores across a team already operating at the top of its region. That discipline was forged earlier: four years as a commercial electrician on institutional job sites and three years as an Operations Technician inside a GMP-certified, ISO 9001-compliant manufacturing facility, environments where precision, documentation rigor, and process discipline are not optional.',
       'Before his technology career, Matt spent three and a half years as a Team Leader and frontline canvasser for Greenpeace USA, leading canvassing crews and consistently ranking among the top performers in donor acquisition across two major markets.',
       'The combination of technical depth, sales conviction, and environmental mission is not incidental. At GMRWS, Matt leads the technology architecture, digital systems, and AI infrastructure that connect the platform\'s field science to the investors, partners, and governments it needs to scale.',
