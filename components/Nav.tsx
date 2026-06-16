@@ -9,7 +9,7 @@ import BrandLockup from './BrandLockup'
 const links = [
   { href: '/technology', label: 'Technology' },
   { href: '/impact', label: 'Impact' },
-  { href: '/blog', label: 'Insights' },
+  { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/funding', label: 'Funding' },
   { href: '/contact', label: 'Contact' },

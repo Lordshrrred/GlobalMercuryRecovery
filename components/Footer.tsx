@@ -5,7 +5,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/technology', label: 'Technology' },
   { href: '/impact', label: 'Impact' },
-  { href: '/blog', label: 'Insights' },
+  { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/funding', label: 'Funding' },
   { href: '/contact', label: 'Contact' },
