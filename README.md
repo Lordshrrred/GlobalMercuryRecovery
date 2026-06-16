@@ -79,11 +79,12 @@ The site includes a static blog engine:
 - Keyword queue lives in `scripts/keywords.txt`
 - Generate one queued post locally with `npm run generate:blog`
 - Generate more than one with `node scripts/generate_blog_post.mjs --count=4`
+- Cross-post the generated run to Dev.to with `npm run publish:devto`
 - Expand the keyword queue with `npm run research:keywords`
 
 GitHub Actions are included:
 
-- `.github/workflows/daily-blog.yml` publishes 4 posts/day on a UTC schedule.
+- `.github/workflows/daily-blog.yml` publishes 4 posts/day on a UTC schedule, then cross-posts two posts to each configured Dev.to account.
 - `.github/workflows/weekly-keyword-research.yml` adds new long-tail keyword targets weekly.
 
 ## Environment Variables
@@ -95,6 +96,9 @@ CONTACT_EMAIL=your@email.com
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-P20LY8N480
 ANTHROPIC_API_KEY=your_anthropic_api_key
 ANTHROPIC_MODEL=claude-sonnet-4-6
+DEV_TO_API_KEY_1=your_first_dev_to_api_key
+DEV_TO_API_KEY_2=your_second_dev_to_api_key
+DEV_TO_PUBLISHED=true
 ```
 
 For GitHub Actions, add these repository secrets:
@@ -102,6 +106,10 @@ For GitHub Actions, add these repository secrets:
 - `ANTHROPIC_API_KEY` for blog generation and keyword research.
 - `ANTHROPIC_MODEL` optional model override.
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics if the measurement ID changes.
+- `DEV_TO_API_KEY_1` for the first Dev.to account.
+- `DEV_TO_API_KEY_2` for the second Dev.to account.
+
+The daily workflow runs as one four-post batch. Posts 1 and 2 publish to `DEV_TO_API_KEY_1`; posts 3 and 4 publish to `DEV_TO_API_KEY_2`. Dev.to posts use the main site article URL as `canonical_url`.
 
 Google Analytics is configured with the GA4 measurement ID `G-P20LY8N480`. If that ID changes later, update `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel and GitHub Actions, or update the fallback in `components/GoogleAnalytics.tsx`.
 

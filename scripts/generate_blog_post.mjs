@@ -7,6 +7,7 @@ const root = process.cwd()
 const keywordsPath = path.join(root, 'scripts', 'keywords.txt')
 const contentDir = path.join(root, 'content', 'blog')
 const lastSlugPath = path.join(root, 'scripts', 'last_generated_blog_slug.txt')
+const generatedSlugsPath = path.join(root, 'scripts', 'generated_blog_slugs.txt')
 
 const countArg = process.argv.find((arg) => arg.startsWith('--count='))
 const count = countArg ? Math.max(1, Number(countArg.split('=')[1]) || 1) : 1
@@ -121,6 +122,7 @@ Rules:
 
 async function main() {
   fs.mkdirSync(contentDir, { recursive: true })
+  fs.writeFileSync(generatedSlugsPath, '', 'utf8')
   const { lines, queued } = readQueuedKeywords()
   if (queued.length === 0) {
     throw new Error('No queued keywords left in scripts/keywords.txt.')
@@ -142,6 +144,7 @@ async function main() {
     fs.writeFileSync(keywordsPath, `${lines.join('\n').replace(/\n*$/, '')}\n`, 'utf8')
     fs.writeFileSync(lastSlugPath, `${slug}\n`, 'utf8')
     created.push(slug)
+    fs.writeFileSync(generatedSlugsPath, `${created.join('\n')}\n`, 'utf8')
     console.log(`Generated ${slug}`)
   }
 

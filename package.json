@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate:blog": "node scripts/generate_blog_post.mjs",
+    "publish:devto": "node scripts/publish_devto_posts.mjs",
     "research:keywords": "node scripts/research_keywords.mjs"
   },
   "dependencies": {
