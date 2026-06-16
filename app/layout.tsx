@@ -3,6 +3,7 @@ import './globals.css'
 import JsonLd from '@/components/JsonLd'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import {
   createOrganizationJsonLd,
   createWebSiteJsonLd,
@@ -79,6 +80,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-navy text-white">
+        <GoogleAnalytics />
         <JsonLd data={createOrganizationJsonLd()} />
         <JsonLd data={createWebSiteJsonLd()} />
         <Nav />

@@ -7,7 +7,9 @@
     "build": "next build",
     "deploy": "next build && rsync -a --delete --exclude='CNAME' --exclude='.nojekyll' out/ docs/ && touch docs/.nojekyll",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:blog": "node scripts/generate_blog_post.mjs",
+    "research:keywords": "node scripts/research_keywords.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",

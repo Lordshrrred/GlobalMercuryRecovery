@@ -1,0 +1,61 @@
+name: Daily Blog Engine
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+    - cron: '0 13 * * *'
+    - cron: '0 17 * * *'
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'How many queued posts to generate'
+        required: false
+        default: '1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-blog-engine-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate queued blog post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+        run: node scripts/generate_blog_post.mjs --count=${{ github.event.inputs.count || '1' }}
+
+      - name: Build static export
+        env:
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+        run: npm run deploy
+
+      - name: Commit generated content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/blog scripts/keywords.txt scripts/last_generated_blog_slug.txt docs
+          if git diff --staged --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git commit -m "Auto: publish GMRWS insight"
+          git pull --rebase --autostash
+          git push

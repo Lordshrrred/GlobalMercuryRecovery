@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import JsonLd from '@/components/JsonLd'
 import { team, getTeamMember } from '@/lib/team'
-import { createPageMetadata, createPersonJsonLd, createWebPageJsonLd } from '@/lib/seo'
+import { createPageMetadata, createWebPageJsonLd } from '@/lib/seo'
 import TeamMemberView from './TeamMemberView'
 
 export function generateStaticParams() {
@@ -14,17 +14,25 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!member) {
     return createPageMetadata({
       title: 'Leadership Profile',
-      description: 'Leadership profile for Global Mercury Recovery & Water Security.',
+      description: 'Leadership update for Global Mercury Recovery & Water Security.',
       path: `/team/${params.slug}`,
     })
   }
 
-  return createPageMetadata({
-    title: member.title ? `${member.name} - ${member.title}` : member.name,
-    description: member.shortBio,
+  const metadata = createPageMetadata({
+    title: 'Leadership Profile Under Review',
+    description:
+      'Global Mercury Recovery & Water Security is currently undergoing a leadership restructuring. Updated team information will be published after the operating structure is finalized.',
     path: `/team/${member.slug}`,
-    image: member.headshot,
   })
+
+  return {
+    ...metadata,
+    robots: {
+      index: false,
+      follow: true,
+    },
+  }
 }
 
 export default function TeamMemberPage({ params }: { params: { slug: string } }) {
@@ -32,25 +40,16 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
   if (!member) notFound()
 
   const seo = {
-    title: member.title ? `${member.name} - ${member.title}` : member.name,
-    description: member.shortBio,
+    title: 'Leadership Profile Under Review',
+    description:
+      'Global Mercury Recovery & Water Security is currently undergoing a leadership restructuring. Updated team information will be published after the operating structure is finalized.',
     path: `/team/${member.slug}`,
-    image: member.headshot,
   }
 
   return (
     <>
       <JsonLd data={createWebPageJsonLd(seo)} />
-      <JsonLd
-        data={createPersonJsonLd({
-          name: member.name,
-          title: member.title,
-          description: member.shortBio,
-          path: `/team/${member.slug}`,
-          image: member.headshot,
-        })}
-      />
-      <TeamMemberView member={member} />
+      <TeamMemberView />
     </>
   )
 }

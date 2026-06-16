@@ -1,12 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { team } from '@/lib/team'
 import { fadeUpHero as fadeUp, stagger } from '@/lib/animations'
-
-const featuredSlugs = ['clark', 'eric-crowe', 'korrie-hayes', 'elizabeth-hayes', 'matt-dunn', 'elvis-araya']
+import { MaskedTeamCard, RestructuringNotice } from '@/components/RestructuringNotice'
 
 const stats = [
   { value: '2026', label: 'Pilot Launch', sub: 'Costa Rica ~ Phase 1' },
@@ -271,75 +268,32 @@ export default function Home() {
             <div>
               <p className="section-label">Leadership</p>
               <h2 className="section-heading max-w-xl">
-                The Team Behind the Platform
+                Leadership Structure
               </h2>
               <div className="gold-line" />
             </div>
             <Link href="/about" className="btn-outline text-xs self-start sm:self-auto flex-none">
-              View Full Team
+              View Update
             </Link>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {team
-              .filter((m) => featuredSlugs.includes(m.slug))
-              .sort((a, b) => featuredSlugs.indexOf(a.slug) - featuredSlugs.indexOf(b.slug))
-              .map((member, i) => {
-                const initials = member.name
-                  .split(' ')
-                  .filter((w) => w.length > 1)
-                  .slice(0, 2)
-                  .map((w) => w[0])
-                  .join('')
-
-                return (
-                  <motion.div
-                    key={member.slug}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.07 }}
-                    whileHover={{ y: -4 }}
-                  >
-                    <Link
-                      href={`/team/${member.slug}`}
-                      className="flex flex-col items-center text-center group cursor-pointer"
-                    >
-                      {/* Photo / Avatar */}
-                      {member.headshot ? (
-                        <div className="w-full aspect-square rounded-sm overflow-hidden border border-navy-border group-hover:border-gold/30 transition-colors mb-3 shadow-[0_0_20px_rgba(0,0,0,0.4)]">
-                          <Image
-                            src={member.headshot}
-                            alt={member.name}
-                            width={400}
-                            height={400}
-                            className="w-full h-full object-cover transition-transform duration-500"
-                            style={{
-                              objectPosition: member.headshotFit?.objectPosition ?? '50% top',
-                              transform: member.headshotFit?.scale ? `scale(${member.headshotFit.scale})` : undefined,
-                              transformOrigin: member.headshotFit?.transformOrigin,
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-full aspect-square rounded-sm bg-navy-card border border-navy-border group-hover:border-gold/30 transition-colors mb-3 flex items-center justify-center">
-                          <span className="text-gold text-2xl font-display font-bold opacity-60">
-                            {initials}
-                          </span>
-                        </div>
-                      )}
-                      <p className="text-white text-xs font-semibold leading-snug group-hover:text-gold transition-colors">
-                        {member.name}
-                      </p>
-                      {member.title && (
-                        <p className="text-gray-500 text-[0.65rem] uppercase tracking-wider mt-0.5 leading-tight">
-                          {member.title.replace(' ~ Costa Rica', '')}
-                        </p>
-                      )}
-                    </Link>
-                  </motion.div>
-                )
-              })}
+          <div className="relative">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.07 }}
+                >
+                  <MaskedTeamCard compact />
+                </motion.div>
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center bg-navy/20 p-4 sm:flex">
+              <RestructuringNotice />
+            </div>
           </div>
         </div>
       </section>

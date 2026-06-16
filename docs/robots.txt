@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /team/
+
+Sitemap: https://globalmercuryrecovery.com/sitemap.xml

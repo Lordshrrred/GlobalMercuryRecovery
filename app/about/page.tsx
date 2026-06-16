@@ -1,10 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { team } from '@/lib/team'
 import { fadeUp } from '@/lib/animations'
+import { MaskedTeamCard, RestructuringNotice } from '@/components/RestructuringNotice'
 
 const advisors = [
   {
@@ -182,76 +181,30 @@ export default function AboutPage() {
             className="mb-14"
           >
             <p className="section-label">Leadership</p>
-            <h2 className="section-heading">The Team</h2>
+            <h2 className="section-heading">Leadership Structure</h2>
             <div className="gold-line" />
             <p className="text-gray-500 text-sm max-w-xl">
-              Click any member to view their full profile and background.
+              Current leadership information is being updated as the organization completes its restructuring.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {team.map((member, i) => {
-              const initials = member.name
-                .split(' ')
-                .filter((w) => w.length > 1)
-                .slice(0, 2)
-                .map((w) => w[0])
-                .join('')
-
-              return (
+          <div className="relative">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 9 }).map((_, i) => (
                 <motion.div
-                  key={member.slug}
+                  key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.07 }}
-                  whileHover={{ y: -4 }}
                 >
-                  <Link
-                    href={`/team/${member.slug}`}
-                    className="bg-navy-card border border-navy-border rounded-sm overflow-hidden group hover:border-gold/30 hover:shadow-[0_0_24px_rgba(201,168,76,0.06)] transition-all duration-300 flex flex-col h-full cursor-pointer"
-                  >
-                    {/* Headshot: full-bleed, no padding */}
-                    {member.headshot ? (
-                      <div className="w-full aspect-square overflow-hidden flex-none">
-                        <Image
-                          src={member.headshot}
-                          alt={member.name}
-                          width={400}
-                          height={400}
-                          className="w-full h-full object-cover transition-transform duration-500"
-                          style={{
-                            objectPosition: member.headshotFit?.objectPosition ?? '50% top',
-                            transform: member.headshotFit?.scale ? `scale(${member.headshotFit.scale})` : undefined,
-                            transformOrigin: member.headshotFit?.transformOrigin,
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-full aspect-square bg-navy-border flex items-center justify-center flex-none">
-                        <span className="text-gold text-4xl font-display font-bold opacity-60">{initials}</span>
-                      </div>
-                    )}
-
-                    {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
-                      <p className="text-white font-semibold mb-1">{member.name}</p>
-                      {member.title && (
-                        <p className="text-gold text-xs font-medium uppercase tracking-wider mb-3">
-                          {member.title}
-                        </p>
-                      )}
-                      <p className="text-gray-500 text-sm leading-relaxed flex-1 line-clamp-3">
-                        {member.shortBio}
-                      </p>
-                      <p className="mt-4 text-gold text-xs font-semibold uppercase tracking-wider group-hover:translate-x-1 transition-transform duration-200">
-                        View Profile →
-                      </p>
-                    </div>
-                  </Link>
+                  <MaskedTeamCard />
                 </motion.div>
-              )
-            })}
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center bg-navy-mid/20 p-4 sm:flex">
+              <RestructuringNotice />
+            </div>
           </div>
         </div>
       </section>
