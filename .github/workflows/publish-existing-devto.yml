@@ -1,0 +1,40 @@
+name: Publish Existing Posts to Dev.to
+
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: 'Newline or comma-separated blog slugs to publish'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Prepare slug list
+        env:
+          SLUGS: ${{ github.event.inputs.slugs }}
+        run: |
+          mkdir -p scripts
+          printf '%s\n' "$SLUGS" | tr ',' '\n' | sed '/^[[:space:]]*$/d' > scripts/generated_blog_slugs.txt
+
+      - name: Cross-post posts to Dev.to
+        env:
+          DEV_TO_API_KEY_1: ${{ secrets.DEV_TO_API_KEY_1 }}
+          DEV_TO_API_KEY_2: ${{ secrets.DEV_TO_API_KEY_2 }}
+          DEV_TO_ACCOUNT_1_DAILY_LIMIT: 2
+          DEV_TO_ACCOUNT_2_DAILY_LIMIT: 2
+          SITE_URL: https://globalmercuryrecovery.com
+        run: npm run publish:devto
