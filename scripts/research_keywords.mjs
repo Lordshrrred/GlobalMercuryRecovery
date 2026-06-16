@@ -5,8 +5,10 @@ import path from 'node:path'
 
 const root = process.cwd()
 const keywordsPath = path.join(root, 'scripts', 'keywords.txt')
-const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6'
+const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001'
 const apiKey = process.env.ANTHROPIC_API_KEY
+const keywordCount = Math.min(Number(process.env.KEYWORD_RESEARCH_COUNT || 20), 40)
+const existingKeywordLimit = Math.min(Number(process.env.KEYWORD_EXISTING_LIMIT || 60), 120)
 
 const fallbackPatterns = [
   'mercury remediation field verification',
@@ -64,10 +66,10 @@ async function main() {
     return
   }
 
-  const prompt = `Generate 40 new long-tail SEO keywords for globalmercuryrecovery.com.
+  const prompt = `Generate ${keywordCount} new long-tail SEO keywords for globalmercuryrecovery.com.
 
 Existing keywords to avoid:
-${[...existing].slice(0, 120).join('\n')}
+${[...existing].slice(0, existingKeywordLimit).join('\n')}
 
 Score each keyword 1-10 based on:
 1. Search demand likelihood
@@ -87,7 +89,7 @@ No markdown. No em dashes.`
     },
     body: JSON.stringify({
       model,
-      max_tokens: 1800,
+      max_tokens: 900,
       system: 'You are a practical SEO researcher for environmental remediation and water security.',
       messages: [{ role: 'user', content: prompt }],
     }),

@@ -10,9 +10,12 @@ const lastSlugPath = path.join(root, 'scripts', 'last_generated_blog_slug.txt')
 const generatedSlugsPath = path.join(root, 'scripts', 'generated_blog_slugs.txt')
 
 const countArg = process.argv.find((arg) => arg.startsWith('--count='))
-const count = countArg ? Math.max(1, Number(countArg.split('=')[1]) || 1) : 1
-const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6'
+const requestedCount = countArg ? Math.max(1, Number(countArg.split('=')[1]) || 1) : 1
+const count = Math.min(requestedCount, Number(process.env.DAILY_POST_LIMIT || 4))
+const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001'
 const apiKey = process.env.ANTHROPIC_API_KEY
+const maxOutputTokens = Math.min(Number(process.env.BLOG_MAX_OUTPUT_TOKENS || 1200), 1600)
+const internalLinkLimit = Math.min(Number(process.env.BLOG_INTERNAL_LINK_LIMIT || 8), 12)
 
 function slugify(value) {
   return value
@@ -47,6 +50,8 @@ function existingPosts() {
   return fs
     .readdirSync(contentDir)
     .filter((file) => file.endsWith('.md'))
+    .sort()
+    .slice(-internalLinkLimit)
     .map((file) => {
       const raw = fs.readFileSync(path.join(contentDir, file), 'utf8')
       const title = raw.match(/^title:\s+"?(.+?)"?$/m)?.[1] || file.replace(/\.md$/, '')
@@ -73,7 +78,7 @@ async function callClaude(keyword, slug, links) {
   }
 
   const today = new Date().toISOString().slice(0, 10)
-  const prompt = `Write one SEO article for Global Mercury Recovery & Water Security.
+  const prompt = `Write one concise SEO article for Global Mercury Recovery & Water Security.
 
 Primary keyword: ${keyword}
 Slug: ${slug}
@@ -85,14 +90,14 @@ ${links.map((post) => `- [${post.title}](/blog/${post.slug})`).join('\n')}
 Return only Markdown with YAML frontmatter. Frontmatter fields must be title, date, description, tags, slug.
 
 Rules:
-- 700 to 1100 words.
+- 500 to 750 words.
 - No em dashes and no double hyphens.
 - Use a Quick answer blockquote first.
 - Write for governments, funders, mining-affected communities, remediation partners, and impact investors.
 - Be practical and specific. No hype.
-- Include 2 to 4 internal links from the available list when they are relevant.
+- Include 1 to 3 internal links from the available list when they are relevant.
 - Include a short "Why this matters" section.
-- Include a short "What to measure" or "What to ask before funding" section where appropriate.
+- Include a short "What to measure" or "What to ask before funding" section.
 - Do not invent proprietary performance data or claim certification.
 - Mention Global Mercury Recovery & Water Security naturally once near the end.`
 
@@ -105,7 +110,7 @@ Rules:
     },
     body: JSON.stringify({
       model,
-      max_tokens: 2200,
+      max_tokens: maxOutputTokens,
       system:
         'You are an environmental remediation editor specializing in mercury pollution, ASGM, water security, mine tailings, and development finance. Return clean Markdown only.',
       messages: [{ role: 'user', content: prompt }],

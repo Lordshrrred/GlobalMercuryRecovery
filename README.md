@@ -95,7 +95,10 @@ For local static builds, no environment variables are required unless you want a
 CONTACT_EMAIL=your@email.com
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-P20LY8N480
 ANTHROPIC_API_KEY=your_anthropic_api_key
-ANTHROPIC_MODEL=claude-sonnet-4-6
+ANTHROPIC_MODEL=claude-haiku-4-5-20251001
+BLOG_MAX_OUTPUT_TOKENS=1200
+BLOG_INTERNAL_LINK_LIMIT=8
+KEYWORD_RESEARCH_COUNT=20
 DEV_TO_API_KEY_1=your_first_dev_to_api_key
 DEV_TO_API_KEY_2=your_second_dev_to_api_key
 DEV_TO_PUBLISHED=true
@@ -104,12 +107,23 @@ DEV_TO_PUBLISHED=true
 For GitHub Actions, add these repository secrets:
 
 - `ANTHROPIC_API_KEY` for blog generation and keyword research.
-- `ANTHROPIC_MODEL` optional model override.
+- `ANTHROPIC_MODEL` optional model override. The recommended low-cost default is `claude-haiku-4-5-20251001`.
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics if the measurement ID changes.
 - `DEV_TO_API_KEY_1` for the first Dev.to account.
 - `DEV_TO_API_KEY_2` for the second Dev.to account.
 
 The daily workflow runs as one four-post batch. Posts 1 and 2 publish to `DEV_TO_API_KEY_1`; posts 3 and 4 publish to `DEV_TO_API_KEY_2`. Dev.to posts use the main site article URL as `canonical_url`.
+
+## Cost Controls
+
+The blog engine is tuned for low Anthropic spend:
+
+- Haiku is the default model.
+- Daily generation is capped at 4 posts.
+- Each post is capped at 1,200 output tokens.
+- Existing internal links are capped at 8 so prompts do not grow forever.
+- Weekly keyword research asks for 20 ideas instead of large batches.
+- If the Anthropic key is missing, deterministic fallback posts still generate without API spend.
 
 Google Analytics is configured with the GA4 measurement ID `G-P20LY8N480`. If that ID changes later, update `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel and GitHub Actions, or update the fallback in `components/GoogleAnalytics.tsx`.
 
