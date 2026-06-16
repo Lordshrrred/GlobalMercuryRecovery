@@ -92,7 +92,7 @@ For local static builds, no environment variables are required unless you want a
 
 ```
 CONTACT_EMAIL=your@email.com
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-P20LY8N480
 ANTHROPIC_API_KEY=your_anthropic_api_key
 ANTHROPIC_MODEL=claude-sonnet-4-6
 ```
@@ -101,9 +101,22 @@ For GitHub Actions, add these repository secrets:
 
 - `ANTHROPIC_API_KEY` for blog generation and keyword research.
 - `ANTHROPIC_MODEL` optional model override.
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics.
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics if the measurement ID changes.
 
-For Google Analytics, create a GA4 web data stream for `https://globalmercuryrecovery.com`, copy the measurement ID that starts with `G-`, and set it as `NEXT_PUBLIC_GA_MEASUREMENT_ID` before building/deploying.
+Google Analytics is configured with the GA4 measurement ID `G-P20LY8N480`. If that ID changes later, update `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel and GitHub Actions, or update the fallback in `components/GoogleAnalytics.tsx`.
+
+## Feeder Site Strategy
+
+This repo can hold the source for a feeder site, but `docs/CNAME` currently points GitHub Pages at `globalmercuryrecovery.com`. If the feeder is published under this same domain, its links are internal links rather than backlinks.
+
+Recommended setup:
+
+- Keep the feeder-site source in this repo, for example `sites/field-notes/`.
+- Publish it to a separate host or domain for backlink value, such as `gmr-field-notes.github.io`, a cheap separate domain, or a dedicated Vercel project.
+- Cross-link sparingly and naturally from feeder posts to the main site's strongest educational pages and blog posts.
+- Keep the main site at `globalmercuryrecovery.com` on Vercel.
+
+Use same-repo source control when convenience matters; use separate publishing destinations when SEO backlink value matters.
 
 ---
 
