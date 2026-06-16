@@ -69,7 +69,7 @@ function validatePost(markdown, slug) {
 
 async function callClaude(keyword, slug, links) {
   if (!apiKey) {
-    throw new Error('ANTHROPIC_API_KEY is required to generate blog posts.')
+    return templatePost(keyword, slug, links)
   }
 
   const today = new Date().toISOString().slice(0, 10)
@@ -118,6 +118,99 @@ Rules:
 
   const json = await response.json()
   return json.content?.[0]?.text?.trim().replace(/^```[a-z]*\n?/i, '').replace(/\n?```$/, '') || ''
+}
+
+function titleize(keyword) {
+  return keyword
+    .split(/\s+/)
+    .map((word) => {
+      if (['ASGM', 'ESG'].includes(word.toUpperCase())) return word.toUpperCase()
+      if (['for', 'and', 'or', 'the', 'to', 'in', 'of', 'near'].includes(word.toLowerCase())) {
+        return word.toLowerCase()
+      }
+      return `${word.charAt(0).toUpperCase()}${word.slice(1)}`
+    })
+    .join(' ')
+    .replace(/\bAsgm\b/g, 'ASGM')
+    .replace(/\bEsg\b/g, 'ESG')
+}
+
+function inferTags(keyword) {
+  const text = keyword.toLowerCase()
+  const tags = ['mercury remediation']
+  if (text.includes('water') || text.includes('aquifer')) tags.push('water security')
+  if (text.includes('tailing') || text.includes('mine waste')) tags.push('mine tailings')
+  if (text.includes('asgm') || text.includes('small scale')) tags.push('ASGM')
+  if (text.includes('fund') || text.includes('grant')) tags.push('development finance')
+  if (tags.length < 4) tags.push('environmental remediation')
+  return [...new Set(tags)].slice(0, 4)
+}
+
+function templatePost(keyword, slug, links) {
+  const today = new Date().toISOString().slice(0, 10)
+  const title = titleize(keyword)
+  const tags = inferTags(keyword)
+  const relatedLinks = links
+    .slice(0, 3)
+    .map((post) => `- [${post.title}](/blog/${post.slug})`)
+    .join('\n')
+
+  return `---
+title: "${title}"
+date: "${today}"
+description: "A practical field note on ${keyword} for remediation partners, funders, governments, and mining-affected communities."
+tags: [${tags.map((tag) => `"${tag}"`).join(', ')}]
+slug: "${slug}"
+---
+
+> **Quick answer:** ${title} is not only a technical issue. It is a field execution problem that depends on baseline testing, water protection, worker safety, community trust, verification, and a plan for what happens after the first cleanup event.
+
+## Why this topic matters
+
+The search phrase "${keyword}" points to a practical question that many mining-affected regions face: how to reduce contamination while building a durable pathway for cleaner water, safer land, and better local outcomes. Mercury remediation often fails when it is treated as a single equipment purchase instead of a complete operating plan.
+
+For governments, funders, and remediation partners, the useful question is not whether a cleanup technology sounds promising. The useful question is whether the project can define the site, protect people, measure results, and leave the community with a better long-term condition.
+
+## Start with baseline data
+
+Any credible project should begin with baseline sampling. That may include tailings, soil, stream sediment, groundwater, surface water, and worker exposure conditions. The specific test plan depends on the site, but the principle is the same: no baseline means no reliable proof of improvement.
+
+Baseline data also helps prevent the wrong remedy from being chosen. A site dominated by fine contaminated sediment needs a different plan than a site where recoverable mercury or residual mineral value can be separated safely.
+
+## Protect water before moving material
+
+Many mercury and mine waste problems become human health problems through water. Rainfall, flood events, shallow wells, and stream movement can carry contamination beyond the mine area. That is why water security should be part of the remediation design from the beginning.
+
+Useful controls can include drainage planning, sediment capture, protected work areas, source water testing, and a clear plan for monitoring after the equipment leaves.
+
+## Recovery is only one piece
+
+Recovery can reduce risk and sometimes create value, but it should not be treated as the whole project. After recoverable material is removed, the remaining tailings or soil may still need stabilization, containment, soil rebuilding, or vegetation planning.
+
+The strongest projects connect recovery to land regeneration. That means thinking about final grade, erosion, root zone development, future land use, and the practical ability of the site to remain stable over time.
+
+## What funders should ask
+
+Before funding a project related to ${keyword}, ask:
+
+1. What baseline data will be collected?
+2. How will water pathways be protected?
+3. What forms of mercury or contamination can the method address?
+4. How will recovered material be documented?
+5. What lab or third-party verification will be used?
+6. What happens to material that cannot be recovered?
+7. How will the community benefit after cleanup?
+
+## What to measure
+
+Good measurement goes beyond tons moved or equipment hours. Useful metrics include contaminant levels before and after work, water quality, recovered material records, soil stability, downstream sediment movement, and whether safe water access improves for nearby communities.
+
+For Global Mercury Recovery & Water Security, this is the core strategic frame: remediation, water infrastructure, subsurface intelligence, tailings recovery, and land regeneration should reinforce each other.
+
+## Related reading
+
+${relatedLinks || '- [Mercury Remediation in Artisanal Gold Mining](/blog/mercury-remediation-artisanal-gold-mining)'}
+`
 }
 
 async function main() {

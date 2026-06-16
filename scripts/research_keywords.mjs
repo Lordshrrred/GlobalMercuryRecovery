@@ -8,6 +8,29 @@ const keywordsPath = path.join(root, 'scripts', 'keywords.txt')
 const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6'
 const apiKey = process.env.ANTHROPIC_API_KEY
 
+const fallbackPatterns = [
+  'mercury remediation field verification',
+  'gold mine tailings water protection',
+  'ASGM mercury cleanup pilot project',
+  'mine tailings recovery and soil rebuilding',
+  'mercury contaminated creek sediment cleanup',
+  'water infrastructure for mining villages',
+  'Minamata Convention remediation partner',
+  'development finance mine cleanup water security',
+  'aquifer protection near artisanal mining',
+  'environmental remediation grant readiness mining',
+  'mercury recovery chain of custody',
+  'tailings stabilization for mercury contamination',
+  'rural water systems for mining affected communities',
+  'third party lab testing mercury cleanup',
+  'mine waste to land regeneration project',
+  'small scale gold mining mercury reduction plan',
+  'mercury exposure reduction mining communities',
+  'watershed monitoring after mine cleanup',
+  'grant proposal mercury remediation water security',
+  'post mining land restoration tailings',
+]
+
 function bareKeyword(line) {
   return line
     .replace(/^# DONE\s+/, '')
@@ -17,14 +40,29 @@ function bareKeyword(line) {
 }
 
 async function main() {
-  if (!apiKey) {
-    throw new Error('ANTHROPIC_API_KEY is required for keyword research.')
-  }
-
   const existingLines = fs.existsSync(keywordsPath)
     ? fs.readFileSync(keywordsPath, 'utf8').split('\n').filter(Boolean)
     : []
   const existing = new Set(existingLines.map(bareKeyword).filter(Boolean))
+
+  if (!apiKey) {
+    const uniqueFallbacks = fallbackPatterns
+      .filter((keyword) => !existing.has(keyword.toLowerCase()))
+      .map((keyword, index) => ({ score: Math.max(6, 10 - Math.floor(index / 3)), keyword }))
+
+    if (!uniqueFallbacks.length) {
+      console.log('No fallback keywords left to append.')
+      return
+    }
+
+    fs.appendFileSync(
+      keywordsPath,
+      `\n${uniqueFallbacks.map((item) => `[${item.score}] ${item.keyword}`).join('\n')}\n`,
+      'utf8'
+    )
+    console.log(`Appended ${uniqueFallbacks.length} fallback keywords.`)
+    return
+  }
 
   const prompt = `Generate 40 new long-tail SEO keywords for globalmercuryrecovery.com.
 
