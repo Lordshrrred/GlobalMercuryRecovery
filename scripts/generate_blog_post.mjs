@@ -14,7 +14,7 @@ const requestedCount = countArg ? Math.max(1, Number(countArg.split('=')[1]) || 
 const count = Math.min(requestedCount, Number(process.env.DAILY_POST_LIMIT || 4))
 const model = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001'
 const apiKey = process.env.ANTHROPIC_API_KEY
-const maxOutputTokens = Math.min(Number(process.env.BLOG_MAX_OUTPUT_TOKENS || 1200), 1600)
+const maxOutputTokens = Math.min(Number(process.env.BLOG_MAX_OUTPUT_TOKENS || 1800), 2000)
 const internalLinkLimit = Math.min(Number(process.env.BLOG_INTERNAL_LINK_LIMIT || 8), 12)
 
 function slugify(value) {
@@ -78,19 +78,20 @@ async function callClaude(keyword, slug, links) {
   }
 
   const today = new Date().toISOString().slice(0, 10)
-  const prompt = `Write one concise SEO article for Global Mercury Recovery & Water Security.
+  const prompt = `Write one SEO article for Global Mercury Recovery & Water Security.
 
 Primary keyword: ${keyword}
 Slug: ${slug}
 Date: ${today}
+Author: Matt Dunn
 
 Available internal links:
 ${links.map((post) => `- [${post.title}](/blog/${post.slug})`).join('\n')}
 
-Return only Markdown with YAML frontmatter. Frontmatter fields must be title, date, description, tags, slug.
+Return only Markdown with YAML frontmatter. Frontmatter fields must be title, date, description, tags, slug, author.
 
 Rules:
-- 500 to 750 words.
+- 900 to 1100 words.
 - No em dashes and no double hyphens.
 - Use a Quick answer blockquote first.
 - Write for governments, funders, mining-affected communities, remediation partners, and impact investors.
@@ -166,6 +167,7 @@ date: "${today}"
 description: "A practical field note on ${keyword} for remediation partners, funders, governments, and mining-affected communities."
 tags: [${tags.map((tag) => `"${tag}"`).join(', ')}]
 slug: "${slug}"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** ${title} is not only a technical issue. It is a field execution problem that depends on baseline testing, water protection, worker safety, community trust, verification, and a plan for what happens after the first cleanup event.

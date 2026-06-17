@@ -1,9 +1,10 @@
 ---
 title: "Mercury Remediation in Artisanal Gold Mining: What Actually Has to Change"
-date: "2026-06-16"
+date: "2026-06-15"
 description: "A practical overview of mercury remediation priorities in artisanal and small-scale gold mining communities."
 tags: ["mercury remediation", "ASGM", "Minamata Convention", "water security"]
 slug: "mercury-remediation-artisanal-gold-mining"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mercury remediation in artisanal and small-scale gold mining is not just a cleanup problem. It is a process, infrastructure, health, and livelihood problem. The strongest programs reduce mercury at the point of use, capture contamination before it spreads, protect water systems, and give miners a practical path away from mercury-dependent processing.

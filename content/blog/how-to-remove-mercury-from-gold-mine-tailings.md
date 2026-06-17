@@ -4,6 +4,7 @@ date: "2026-06-16"
 description: "A practical overview of mercury removal from gold mine tailings, including testing, recovery, stabilization, and water protection."
 tags: ["mercury remediation", "mine tailings", "gold mining", "water security"]
 slug: "how-to-remove-mercury-from-gold-mine-tailings"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mercury removal from gold mine tailings starts with testing, not equipment. A serious cleanup plan identifies mercury concentration, particle size, mineral content, water movement, and human exposure pathways before choosing recovery, stabilization, or containment methods.

@@ -1,9 +1,10 @@
 ---
 title: "Water Security for Mining Affected Communities"
-date: "2026-06-16"
+date: "2026-06-09"
 description: "Why water security should be designed into mining remediation projects from the beginning, especially in mercury-affected regions."
 tags: ["water security", "mining communities", "aquifer protection", "mercury pollution"]
 slug: "water-security-for-mining-affected-communities"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Water security for mining affected communities means more than drilling a well. It requires source protection, contamination mapping, infrastructure planning, monitoring, and community-scale systems that can survive after the remediation team leaves.

@@ -1,9 +1,10 @@
 ---
 title: "Primary Water Detection and Aquifer Protection in Mining-Affected Regions"
-date: "2026-06-16"
+date: "2026-06-11"
 description: "How subsurface intelligence and water protection fit into mercury remediation work."
 tags: ["water security", "aquifer protection", "subsurface mapping", "hydrogeology"]
 slug: "primary-water-detection-aquifer-protection"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mercury remediation and water security should be designed together. Mining-affected regions need to know where contamination is moving, which water sources are vulnerable, and where resilient water infrastructure can be developed. Subsurface intelligence helps turn cleanup from a surface response into a basin-aware strategy.

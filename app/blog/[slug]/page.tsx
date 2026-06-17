@@ -42,9 +42,25 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           description: post.description,
           datePublished: post.date,
           dateModified: post.date,
-          author: { '@type': 'Organization', name: siteName },
-          publisher: { '@type': 'Organization', name: siteName },
+          author: {
+            '@type': 'Person',
+            name: post.author || 'Matt Dunn',
+            jobTitle: 'Chief Technical Officer',
+            worksFor: { '@type': 'Organization', name: siteName, url: siteUrl },
+          },
+          publisher: { '@type': 'Organization', name: siteName, url: siteUrl },
           mainEntityOfPage: url,
+        }}
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+            { '@type': 'ListItem', position: 2, name: 'Insights', item: `${siteUrl}/blog` },
+            { '@type': 'ListItem', position: 3, name: post.title, item: url },
+          ],
         }}
       />
       <JsonLd
@@ -74,6 +90,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <p className="mt-6 text-xs uppercase tracking-[0.18em] text-gray-600">
               {formatPostDate(post.date, true)}{' '}
               | {post.readingTime}
+              {post.author && ` | By ${post.author}, Chief Technical Officer`}
             </p>
           </div>
         </header>

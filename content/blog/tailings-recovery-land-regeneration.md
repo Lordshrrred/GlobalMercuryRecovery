@@ -1,9 +1,10 @@
 ---
 title: "Tailings Recovery and Land Regeneration After Mercury-Intensive Mining"
-date: "2026-06-16"
+date: "2026-06-12"
 description: "Why contaminated tailings are both an environmental liability and a land regeneration opportunity."
 tags: ["tailings recovery", "land regeneration", "soil remediation", "mine cleanup"]
 slug: "tailings-recovery-land-regeneration"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mine tailings are not just leftover waste. In mercury-intensive mining regions, tailings can hold residual metals, mobile contaminants, and long-term land risk. The right recovery and stabilization strategy can reduce exposure, recover remaining value, and turn damaged ground into a safer foundation for future use.

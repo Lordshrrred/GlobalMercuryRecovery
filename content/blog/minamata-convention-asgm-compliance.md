@@ -1,9 +1,10 @@
 ---
 title: "Minamata Convention ASGM Compliance: What Remediation Partners Need to Understand"
-date: "2026-06-16"
+date: "2026-06-14"
 description: "How the Minamata Convention frames mercury reduction in artisanal and small-scale gold mining."
 tags: ["Minamata Convention", "ASGM compliance", "mercury reduction", "policy"]
 slug: "minamata-convention-asgm-compliance"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** The Minamata Convention treats artisanal and small-scale gold mining as a major mercury source and asks countries with significant activity to reduce and, where feasible, eliminate mercury use. For remediation partners, that means technical solutions must align with national action plans, community realities, reporting needs, and safer livelihood pathways.

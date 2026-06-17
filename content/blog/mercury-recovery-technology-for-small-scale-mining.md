@@ -1,9 +1,10 @@
 ---
 title: "Mercury Recovery Technology for Small Scale Mining"
-date: "2026-06-16"
+date: "2026-06-13"
 description: "What governments, funders, and operators should look for when evaluating mercury recovery technology for small scale mining."
 tags: ["mercury recovery", "small scale mining", "ASGM", "environmental remediation"]
 slug: "mercury-recovery-technology-for-small-scale-mining"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mercury recovery technology for small scale mining has to work in difficult field conditions. The best systems are portable, verifiable, safe for workers, realistic for local operators, and connected to a plan for tailings, water, and long-term site management.

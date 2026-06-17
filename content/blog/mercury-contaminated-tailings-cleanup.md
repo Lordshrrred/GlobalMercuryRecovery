@@ -1,9 +1,10 @@
 ---
 title: "Mercury Contaminated Tailings Cleanup"
-date: "2026-06-16"
+date: "2026-06-10"
 description: "A practical field guide to cleaning up mercury contaminated tailings without ignoring water, land stability, and verification."
 tags: ["contaminated tailings", "mercury cleanup", "mine waste", "soil regeneration"]
 slug: "mercury-contaminated-tailings-cleanup"
+author: "Matt Dunn"
 ---
 
 > **Quick answer:** Mercury contaminated tailings cleanup should combine source control, safe recovery, stabilization, water monitoring, and land restoration. The goal is not simply to move tailings. The goal is to reduce exposure and create a stable post-cleanup condition.

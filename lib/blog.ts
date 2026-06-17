@@ -7,6 +7,7 @@ export type BlogPost = {
   date: string
   description: string
   tags: string[]
+  author?: string
   body: string
   readingTime: string
 }
@@ -63,6 +64,7 @@ export function getAllPosts(): BlogPost[] {
         date: String(data.date || ''),
         description: String(data.description || ''),
         tags: Array.isArray(data.tags) ? data.tags : [],
+        author: data.author ? String(data.author) : undefined,
         body,
         readingTime: estimateReadingTime(body),
       }
