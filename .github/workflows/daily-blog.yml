@@ -38,16 +38,16 @@ jobs:
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
           BLOG_MAX_OUTPUT_TOKENS: 1800
           BLOG_INTERNAL_LINK_LIMIT: 8
-          DAILY_POST_LIMIT: 4
+          DAILY_POST_LIMIT: 2
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
-        run: node scripts/generate_blog_post.mjs --count=${{ github.event.inputs.count || '4' }}
+        run: node scripts/generate_blog_post.mjs --count=${{ github.event.inputs.count || '2' }}
 
       - name: Cross-post generated posts to Dev.to
         env:
           DEV_TO_API_KEY_1: ${{ secrets.DEV_TO_API_KEY_1 }}
           DEV_TO_API_KEY_2: ${{ secrets.DEV_TO_API_KEY_2 }}
-          DEV_TO_ACCOUNT_1_DAILY_LIMIT: 2
-          DEV_TO_ACCOUNT_2_DAILY_LIMIT: 2
+          DEV_TO_ACCOUNT_1_DAILY_LIMIT: 1
+          DEV_TO_ACCOUNT_2_DAILY_LIMIT: 1
           SITE_URL: https://globalmercuryrecovery.com
         run: npm run publish:devto
 
