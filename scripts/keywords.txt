@@ -130,3 +130,24 @@
 [7] hydrogeological survey artisanal mining contamination zone
 [7] remote village water infrastructure mine region financing
 [7] environmental remediation esg reporting small mining operations
+
+[9] mercury recovery from cyanide leaching tailings
+[9] Minamata Convention ASGM mercury inventory
+[9] mercury recovery equipment lease financing
+[9] government mercury remediation procurement
+[9] impact investment mercury cleanup infrastructure
+[9] development bank mercury remediation project finance
+[8] artisanal mining mercury hotspot mapping
+[8] tailings pond mercury stabilization methods
+[8] small scale mining water contamination audit
+[8] artisanal gold mining mercury waste management plan
+[8] tailings impoundment mercury leachate control
+[8] artisanal mining community water testing protocol
+[8] ASGM formalization mercury compliance roadmap
+[8] mining affected watershed restoration plan
+[8] artisanal mining mercury emissions inventory
+[8] tailings characterization mercury content testing
+[7] mercury remediation roi for developing nations
+[7] mercury bioavailability assessment mining sites
+[7] mercury speciation analysis mine discharge
+[7] mercury sorption technology for tailings water
